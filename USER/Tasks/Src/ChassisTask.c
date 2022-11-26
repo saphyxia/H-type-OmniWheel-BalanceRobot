@@ -237,8 +237,8 @@ void ChassisTask(void const * argument)
 			hcan2TxFrame.data[4] = (int16_t)tableout>> 8;
 			hcan2TxFrame.data[5] = (int16_t)tableout;
 
-			USER_CAN_TxMessage(&hcan1,&hcan1TxFrame);
-			USER_CAN_TxMessage(&hcan2,&hcan2TxFrame);
+//			USER_CAN_TxMessage(&hcan1,&hcan1TxFrame);
+//			USER_CAN_TxMessage(&hcan2,&hcan2TxFrame);
 		}
 		
     osDelayUntil(&systick,1);
@@ -275,7 +275,7 @@ static bool GetBall_Ctrl(void)
 		//抬起
 		IF_Arm_Down = false;
 	}
-	if(Reset && (osKernelSysTick()-Arm_Cnt) > 2700)
+	else if(Reset && (osKernelSysTick()-Arm_Cnt) > 2700)
 	{
 		result = true;
 		Reset = false;
@@ -301,7 +301,7 @@ static bool OutBall_Ctrl(void)
 		//拦球，为换球做准备
 		__HAL_TIM_SetCompare(&htim1,TIM_CHANNEL_2,1600);
 	}
-	if(Reset && (osKernelSysTick()-Out_Cnt) > 2000)
+	else if(Reset && (osKernelSysTick()-Out_Cnt) > 2000)
 	{
 		result = true;
 		Reset = false;
@@ -338,7 +338,7 @@ static void Point_Action(float distance)
 				{
 						Goalline.angle = 90.f;
 				}
-				if(point_Cnt == 3 || point_Cnt == 10)
+				else if(point_Cnt == 3 || point_Cnt == 10)
 				{
 						Goalline.angle = 0.f;
 				}
@@ -356,7 +356,7 @@ static void Point_Action(float distance)
 				{
 						IF_OUT_ENABLE = true;
 				}
-				if(point_Cnt >=5 && point_Cnt <=9)
+				else if(point_Cnt >=5 && point_Cnt <=9)
 				{
 						IF_GET_ENABLE = true;
 				}
